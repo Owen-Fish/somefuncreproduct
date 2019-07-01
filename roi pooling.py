@@ -30,7 +30,7 @@ def roipooling(x):
         bin_size_h = roi_height / Pooled_height
         bin_size_w = roi_width / Pooled_width
 
-        for c in range(num_channel):
+        for c in range(num_channel):  # calculate channel by channel
             for ph in range(Pooled_height):
                 for pw in range(Pooled_width):
                     hstart = np.floor(ph * bin_size_h)
@@ -52,7 +52,7 @@ def roipooling(x):
                         max_idx[n][c].T.reshape(-1)[pool_idx] = -1
                         continue
 
-                    # 获取最大值的索引
+                    # 获取最大值的索引, 这一步是为了backward时候计算梯度。
                     max_cont = - np.inf
                     for h in range(np.int(hstart), np.int(hend)):
                         for w in range(np.int(wstart), np.int(wend)):
